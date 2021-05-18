@@ -104,8 +104,8 @@ const CardsComponent = () => {
   };
   const renderOffers = (item) => {
     return (
-      <View style={{ flex: 1 }}>
-        <ImageBackground style={styles.cardPhoto} source={item.imageSource}>
+      <View >
+        <ImageBackground style={styles.otherOfferCard} source={item.imageSource}>
           <TouchableOpacity>
             <ImageBackground
               style={styles.heartButton}
@@ -115,6 +115,14 @@ const CardsComponent = () => {
           <TouchableOpacity style={styles.milesButton}>
             <Text style={styles.milesText}>{item.noOfDays} night's</Text>
           </TouchableOpacity>
+          <Text style={styles.offerDescription}>{item.description}</Text>
+          <View style={styles.offerLocationView}>
+          <Image
+            style={styles.locationIcon}
+            source={require("../../assets/location-white.png")}
+          ></Image>
+          <Text style={styles.offerLocationText}>{item.location}</Text>
+        </View>
         </ImageBackground>
       </View>
     );
@@ -145,7 +153,7 @@ const CardsComponent = () => {
           return renderOffers(item);
         })}
       </ScrollView>
-      </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -155,7 +163,6 @@ const styles = ScaledSheet.create({
     height: "100%",
   },
   cardListContainer: {
-    paddingBottom: "50@vs",
     paddingHorizontal: "20@s",
   },
   cardPhoto: {
@@ -169,7 +176,7 @@ const styles = ScaledSheet.create({
   heartButton: {
     width: "16@s",
     height: "16@vs",
-    marginLeft: "287@s",
+    marginLeft: "85%",
     marginTop: "16@vs",
   },
   milesButton: {
@@ -233,15 +240,46 @@ const styles = ScaledSheet.create({
   },
   otherOffersText: {
     height: "22@vs",
+    marginLeft: "28@s",
+    marginBottom:"16@vs",
     fontSize: "16@s",
     fontWeight: "700",
   },
   otherOffersScroll: {
     height: "194@vs",
-    marginLeft: "20@s",
-    paddingBottom:"194@vs",
+    marginHorizontal: "10@s",
+    marginBottom:"30@vs",
     flexDirection: "row",
     flex: 1,
+  },
+  otherOfferCard: {
+    marginLeft: "14@s",
+    height: "165@vs",
+    width: "287@s",
+    borderRadius: "16@s",
+    overflow: "hidden",
+    resizeMode: "contain",
+  },
+  offerDescription:{
+    height:"22@vs",
+    fontSize:"16@s",
+    marginLeft:"24@s",
+    marginTop:"75@vs",
+    alignItems: "center",
+    color:"rgba(255, 255, 255, 1)"
+  },
+  offerLocationView:{
+    height: "20@vs",
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft:"24@s",
+    marginBottom:"8@vs"
+  },
+  offerLocationText: {
+    height: "20@vs",
+    paddingLeft: "4@s",
+    fontSize: "12@s",
+    color: "rgba(255, 255, 255, 1)",
   },
 });
 

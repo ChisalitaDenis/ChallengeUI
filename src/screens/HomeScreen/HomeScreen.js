@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { SafeAreaView, View,StatusBar } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
 import HeadComp from "../../Components/HeadComp";
 import ChipsComponents from "../../Components/ChipsComponents";
@@ -8,7 +8,7 @@ import BottomComponent from "../../Components/BottomComponent";
 
 const HomeScreen = () => {
   return (
-    <View style={styles.homeView}>
+    <SafeAreaView style={styles.homeView}> 
       <View style={styles.navigationHeader}>
         <HeadComp />
       </View>
@@ -21,13 +21,14 @@ const HomeScreen = () => {
       <View>
         <BottomComponent/>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = ScaledSheet.create({
   homeView: {
     backgroundColor: "rgba(255, 255, 255, 1)",
-    flex:1
+    flex:1,
+    paddingTop:StatusBar.currentHeight
   },
   navigationHeader: {
     height: "85@vs",
