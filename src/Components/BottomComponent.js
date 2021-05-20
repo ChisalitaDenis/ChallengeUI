@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableOpacity, Text, View, ImageBackground } from "react-native";
+import { TouchableOpacity, View, ImageBackground } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import Images from "../screens/Theme/Images";
 
 const BottomComponent = () => {
   return (
@@ -8,25 +9,25 @@ const BottomComponent = () => {
       <TouchableOpacity>
         <ImageBackground
           style={styles.button}
-          source={require("../../assets/home.png")}
+          source={Images.homeButtonIcon}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <ImageBackground
           style={styles.button}
-          source={require("../../assets/black-heart.png")}
+          source={Images.blackHeartIcon}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <ImageBackground
           style={styles.button}
-          source={require("../../assets/mail.png")}
+          source={Images.mailIcon}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <ImageBackground
           style={styles.button}
-          source={require("../../assets/profile.png")}
+          source={Images.profileIcon}
         />
       </TouchableOpacity>
     </View>
@@ -35,16 +36,16 @@ const BottomComponent = () => {
 
 const styles = ScaledSheet.create({
   buttons: {
-    paddingHorizontal: "39@s",
-    marginHorizontal: "25@vs",
+    paddingHorizontal: "38@s",
+    marginHorizontal: "24@vs",
     height: "38@vs",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
   },
   button: {
-    width: "22.5@s",
-    height: "21.5@vs",
+    width: "22@s",
+    height: "20@vs",
     resizeMode: "contain",
   },
 });

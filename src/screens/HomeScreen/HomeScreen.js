@@ -31,7 +31,7 @@ const styles = ScaledSheet.create({
     paddingTop:StatusBar.currentHeight
   },
   navigationHeader: {
-    height: "85@vs",
+    height: "86@vs",
     
   },
   chips: {
