@@ -9,6 +9,9 @@ import {
   ScrollView,
 } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import Strings from "../screens/Theme/Strings";
+import Images from "../screens/Theme/Images";
+import Cards from "./Cards";
 
 const mockData = [
   {
@@ -16,7 +19,7 @@ const mockData = [
     description: "Sunny apartment",
     price: 233,
     location: "Los Angeles",
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 1,
   },
   {
@@ -24,7 +27,7 @@ const mockData = [
     description: "Sunny apartment",
     price: 233,
     location: "Los Angeles",
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 2,
   },
   {
@@ -32,7 +35,7 @@ const mockData = [
     description: "Sunny apartment",
     price: 233,
     location: "Los Angeles",
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 3,
   },
   {
@@ -40,7 +43,7 @@ const mockData = [
     description: "Sunny apartment",
     price: 233,
     location: "Los Angeles",
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 4,
   },
   {
@@ -48,7 +51,7 @@ const mockData = [
     description: "Sunny apartment",
     price: 233,
     location: "Los Angeles",
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 5,
   },
 ];
@@ -59,7 +62,7 @@ const otherData = [
     price: 233,
     location: "Los Angeles",
     noOfDays: 3,
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource:Images.house1 ,
     key: 1,
   },
   {
@@ -68,40 +71,12 @@ const otherData = [
     price: 233,
     location: "Los Angeles",
     noOfDays: 3,
-    imageSource: require("../../assets/house1.jpg"),
+    imageSource: Images.house1,
     key: 2,
   },
 ];
 const CardsComponent = () => {
-  const renderCards = (item) => {
-    return (
-      <View style={{ flex: 1 }}>
-        <ImageBackground style={styles.cardPhoto} source={item.imageSource}>
-          <TouchableOpacity>
-            <ImageBackground
-              style={styles.heartButton}
-              source={require("../../assets/heart.png")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.milesButton}>
-            <Text style={styles.milesText}>{item.miles} miles</Text>
-          </TouchableOpacity>
-        </ImageBackground>
-        <View style={styles.detailsView}>
-          <Text style={styles.descriptionText}>{item.description}</Text>
-          <Text style={styles.priceText}>${item.price}</Text>
-          <Text> /per day</Text>
-        </View>
-        <View style={styles.locationView}>
-          <Image
-            style={styles.locationIcon}
-            source={require("../../assets/location.png")}
-          ></Image>
-          <Text style={styles.locationText}>{item.location}</Text>
-        </View>
-      </View>
-    );
-  };
+  
   const renderOffers = (item) => {
     return (
       <View >
@@ -109,17 +84,17 @@ const CardsComponent = () => {
           <TouchableOpacity>
             <ImageBackground
               style={styles.heartButton}
-              source={require("../../assets/heart.png")}
+              source={Images.heartIcon}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.milesButton}>
-            <Text style={styles.milesText}>{item.noOfDays} night's</Text>
+            <Text style={styles.milesText}>{item.noOfDays}{Strings.cardsComponent.labels.disponibility}</Text>
           </TouchableOpacity>
           <Text style={styles.offerDescription}>{item.description}</Text>
           <View style={styles.offerLocationView}>
           <Image
             style={styles.locationIcon}
-            source={require("../../assets/location-white.png")}
+            source={Images.whiteLocationIcon}
           ></Image>
           <Text style={styles.offerLocationText}>{item.location}</Text>
         </View>
@@ -138,10 +113,10 @@ const CardsComponent = () => {
         keyExtractor={(mockData) => mockData.key}
         data={mockData}
         renderItem={({ item }) => {
-          return renderCards(item);
+          return Cards(item);
         }}
       ></FlatList>
-      <Text style={styles.otherOffersText}>Other Offers</Text>
+      <Text style={styles.otherOffersText}>{Strings.cardsComponent.labels.otherOffers}</Text>
       <ScrollView
         scrollEnabled={true}
         horizontal={true}
@@ -180,7 +155,7 @@ const styles = ScaledSheet.create({
     marginTop: "16@vs",
   },
   milesButton: {
-    width: "87@s",
+    width: "88@s",
     height: "24@vs",
     marginLeft: "24@s",
     marginTop: "-16@vs",
@@ -200,7 +175,6 @@ const styles = ScaledSheet.create({
     alignItems: "center",
   },
   descriptionText: {
-    width: "150@s",
     height: "22@vs",
     fontSize: "16@s",
     fontWeight: "700",
@@ -229,8 +203,8 @@ const styles = ScaledSheet.create({
   },
   locationIcon: {
     width: "8@s",
-    height: "9@vs",
-    marginBottom: "5.5@vs",
+    height: "10@vs",
+    marginBottom: "5@vs",
   },
   locationText: {
     height: "20@vs",
@@ -254,8 +228,8 @@ const styles = ScaledSheet.create({
   },
   otherOfferCard: {
     marginLeft: "14@s",
-    height: "165@vs",
-    width: "287@s",
+    height: "166@vs",
+    width: "288@s",
     borderRadius: "16@s",
     overflow: "hidden",
     resizeMode: "contain",
@@ -264,7 +238,7 @@ const styles = ScaledSheet.create({
     height:"22@vs",
     fontSize:"16@s",
     marginLeft:"24@s",
-    marginTop:"75@vs",
+    marginTop:"76@vs",
     alignItems: "center",
     color:"rgba(255, 255, 255, 1)"
   },

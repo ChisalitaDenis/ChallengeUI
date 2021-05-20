@@ -6,6 +6,8 @@ import {
   TextInput,
 } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import Images from "../screens/Theme/Images";
+import Strings from "../screens/Theme/Strings";
 
 const HeaderComponent = () => {
   const [text, onChangeText] = useState("");
@@ -14,14 +16,14 @@ const HeaderComponent = () => {
       <TouchableOpacity style={styles.filterSearch}>
         <Image
           style={styles.filterSearch}
-           source={require("../../assets/Icon.png")}
+           source={Images.filterIcon}
         />
       </TouchableOpacity>
       <View style={styles.searchBar}>
-        <Image style={styles.searchIcon} source={require('../../assets/Shape.png')} />
+        <Image style={styles.searchIcon} source={Images.searchIcon} />
         <TextInput
           autoCorrect={false}
-          placeholder="Search via City"
+          placeholder={Strings.head.labels.searchPlaceholder}
           style={styles.textStyle}
           onChangeText={onChangeText}
           value={text}
@@ -45,7 +47,7 @@ const styles = ScaledSheet.create({
     paddingLeft:"20@s"
   },
   searchBar: {
-    width: "271@s",
+    width: "270@s",
     height: "40@vs",
     backgroundColor: "rgba(228, 228, 231, 0.4)",
     marginLeft:"14@s",
@@ -60,9 +62,9 @@ const styles = ScaledSheet.create({
     color: "black",
   },
   searchIcon: {
-    width: "15.56@s",
-    height: "14.58@vs",
-    marginLeft:"15@s"
+    width: "16@s",
+    height: "16@vs",
+    marginLeft:"16@s"
   },
 });
 

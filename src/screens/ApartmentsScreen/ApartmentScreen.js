@@ -10,19 +10,21 @@ import {
   StatusBar,
 } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import Strings from "../Theme/Strings";
+import Images from "../Theme/Images";
 
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 60;
 const mockData = [
   {
     images: [
-      { imageSource: require("../../../assets/house2.jpg") },
-      { imageSource: require("../../../assets/house2v2.jpg") },
-      { imageSource: require("../../../assets/house2v3.jpg") },
+      { imageSource:  Images.house2v1},
+      { imageSource:  Images.house2v2},
+      { imageSource:  Images.house2v3},
     ],
     summaryDescription: "Luxury apartments",
     stars: 4,
-    profilePicture: require("../../../assets/profilePic.png"),
+    profilePicture: Images.rentProfilePic,
     specifications: [
       { specification: "3 Bathrooms" },
       { specification: "Wi Fi" },
@@ -32,15 +34,15 @@ const mockData = [
     description:
       "Nullam hendrerit lectus non pretium fermentum. Donec faucibus sodales ante, nec finibus quam lacinia sit amet. Nunc ut posuere erat. Proin convallis odio elementum sem vestibulum",
     about: [
-      { imageSource: require("../../../assets/house1.jpg") },
-      { imageSource: require("../../../assets/black-heart.png") },
+      { imageSource: Images.house1},
+      { imageSource: Images.house1 },
     ],
     price: 150,
   },
 ];
 const ApartmentScreen = () => {
   const [currentDot, setCurrentDot] = useState(0);
-    
+
   change = ({ nativeEvent }) => {
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
@@ -50,18 +52,35 @@ const ApartmentScreen = () => {
     }
   };
   const renderSpecs = (item) => {
-    return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity style={styles.specsButtonsStyle}>
-          <Text style={styles.specsTextStyle}>{item.specification}</Text>
-        </TouchableOpacity>
-      </View>
+    return(
+      item.map((item, index) => {
+        return(
+            <TouchableOpacity style={styles.specsButtonsStyle}>
+              <Text style={styles.specsTextStyle}>{item.specification}</Text>
+            </TouchableOpacity>
+        );
+      })
     );
   };
   const renderImages = (item) => {
-    return <Image style={styles.imageStyle} source={item.imageSource} />;
+    return(
+     item.map(item=> {
+        return <Image style={styles.imageStyle} source={item.imageSource} />;
+      })
+    );
   };
-
+  const renderStars = (item) => {
+    return(
+      new Array(item.stars).fill(0).map(() => {
+        return (
+          <Image
+            style={styles.starsIcons}
+            source={Images.starIcon}
+          ></Image>
+        );
+      })
+    );
+  };
   const renderData = (item) => {
     return (
       <View style={{ flex: 1, backgroundColor: "red" }}>
@@ -81,9 +100,7 @@ const ApartmentScreen = () => {
               numRows={1}
               style={styles.imageScrollView}
             >
-              {item.images.map((item, index) => {
-                return renderImages(item);
-              })}
+              {renderImages(item.images)}
             </ScrollView>
             <View style={styles.dotsStyle}>
               {new Array(item.images.length).fill(0).map((i, k) => {
@@ -96,7 +113,7 @@ const ApartmentScreen = () => {
                         : styles.dotsTextStyle
                     }
                   >
-                    ⬤
+                    {Strings.apartmentScreen.labels.dot}
                   </Text>
                 );
               })}
@@ -106,42 +123,31 @@ const ApartmentScreen = () => {
             <View style={styles.summaryViewInfo}>
               <Text style={styles.summaryText}>{item.summaryDescription}</Text>
 
-              <View style={{ flexDirection: "row" }}>
-                {new Array(item.stars).fill(0).map(() => {
-                  return (
-                    <Image
-                      style={styles.starsIcons}
-                      source={require("../../../assets/star.png")}
-                    ></Image>
-                  );
-                })}
-              </View>
+              <View style={{ flexDirection: "row" }}>{renderStars(item)}</View>
             </View>
             <Image style={styles.profilePic} source={item.profilePicture} />
           </View>
-          <Text style={styles.descriptionTitle}>Specifications</Text>
+          <Text style={styles.descriptionTitle}>
+            {Strings.apartmentScreen.labels.specification}
+          </Text>
           <ScrollView
             scrollEnabled={true}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             numRows={1}
             style={styles.specsBar}
-          >
-            {item.specifications.map((item, index) => {
-              return renderSpecs(item);
-            })}
-          </ScrollView>
-          <Text style={styles.descriptionTitle}>Description</Text>
+          >{renderSpecs(item.specifications)}</ScrollView>
+          <Text style={styles.descriptionTitle}>{Strings.apartmentScreen.labels.description}</Text>
           <Text style={styles.descriptionTextStyle}>{item.description}</Text>
-          <Text style={styles.aboutTextStyle}>About this space</Text>
+          <Text style={styles.aboutTextStyle}>{Strings.apartmentScreen.labels.about}</Text>
         </ScrollView>
         <View style={styles.bottomMenu}>
           <View style={styles.priceView}>
-            <Text style={styles.priceTextSyle}>{item.price}$</Text>
-            <Text style={styles.perNightTextStyle}>/night</Text>
+            <Text style={styles.priceTextSyle}>{item.price}{Strings.cardsComponent.labels.currency}</Text>
+            <Text style={styles.perNightTextStyle}>{Strings.apartmentScreen.labels.perNight}</Text>
           </View>
           <TouchableOpacity style={styles.bookingButton}>
-            <Text style={styles.bookingButtonTextStyle}>Booking</Text>
+            <Text style={styles.bookingButtonTextStyle}>{Strings.apartmentScreen.buttons.booking}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -160,17 +166,16 @@ const styles = ScaledSheet.create({
   mainView: {
     backgroundColor: "rgba(255, 255, 255, 1)",
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
   },
   imageScrollView: {
     width,
-    height: "345@vs",
+    height: "346@vs",
     flexDirection: "row",
     flex: 1,
   },
   imageStyle: {
     width,
-    height: "345@vs",
+    height: "346@vs",
     borderBottomLeftRadius: "24@s",
     borderBottomRightRadius: "24@s",
     overflow: "hidden",
@@ -184,21 +189,21 @@ const styles = ScaledSheet.create({
   },
   dotsTextStyle: {
     color: "#888",
-    margin: "3@s",
+    margin: "4@s",
   },
   dotsActiveTextStyle: {
     color: "#fff",
-    margin: "3@s",
+    margin: "4@s",
   },
   summaryView: {
-    height: "55@vs",
+    height: "56@vs",
     marginTop: "24@vs",
     marginRight: "24@vs",
     flexDirection: "row",
   },
   summaryViewInfo: {
     width: "80%",
-    height: "55@vs",
+    height: "56@vs",
     marginLeft: "24@vs",
     justifyContent: "space-between",
   },
@@ -218,9 +223,9 @@ const styles = ScaledSheet.create({
     resizeMode: "contain",
   },
   starsIcons: {
-    height: "17@vs",
+    height: "18@vs",
     width: "18@s",
-    marginTop: "7@vs",
+    marginTop: "8@vs",
   },
   descriptionTitle: {
     fontSize: "22@s",
@@ -246,7 +251,7 @@ const styles = ScaledSheet.create({
   },
   specsTextStyle: {
     paddingVertical: "2@vs",
-    paddingHorizontal:"12@vs",
+    paddingHorizontal: "12@vs",
     fontSize: "12@vs",
     color: "rgba(143, 146, 161, 1)",
   },
@@ -267,7 +272,7 @@ const styles = ScaledSheet.create({
     marginLeft: "24@s",
   },
   bottomMenu: {
-    height: "107@vs",
+    height: "106@vs",
     backgroundColor: "rgba(255, 255, 255, 1)",
     flexDirection: "row",
     justifyContent: "space-between",
