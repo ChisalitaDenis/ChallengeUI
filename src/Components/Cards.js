@@ -10,24 +10,43 @@ import { ScaledSheet } from "react-native-size-matters";
 import Strings from "../screens/Theme/Strings";
 import Images from "../screens/Theme/Images";
 
-const Cards = (item) => {
+const Cards = (item, navigation) => {
   const renderCards = (item) => {
     return (
       <View style={{ flex: 1 }}>
-        <ImageBackground style={styles.cardPhoto} source={item.imageSource}>
-          <TouchableOpacity>
-            <ImageBackground
-              style={styles.heartButton}
-              source={Images.heartIcon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.milesButton}>
-            <Text style={styles.milesText}>
-              {item.miles}
-              {Strings.cardsComponent.labels.miles}
-            </Text>
-          </TouchableOpacity>
-        </ImageBackground>
+        <TouchableOpacity>
+          <ImageBackground
+            style={styles.cardPhoto}
+            source={{ uri: item.thumbnail }}
+          >
+            <TouchableOpacity>
+              <ImageBackground
+                style={styles.heartButton}
+                source={Images.heartIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.milesButton}>
+              <Text style={styles.milesText}>
+                {item.miles}
+                {Strings.cardsComponent.labels.miles}
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.roomsView}>
+              <View style={styles.imagesView}>
+                <Image style={styles.bedRooms} source={Images.bedRoomsIcon} />
+                <Text style={styles.roomsText}>{item.rooms.bedrooms}</Text>
+              </View>
+              <View style={styles.imagesView}>
+                <Image style={styles.bedRooms} source={Images.bathRoomIcon} />
+                <Text style={styles.roomsText}>{item.rooms.bathrooms}</Text>
+              </View>
+              <View style={styles.imagesView}>
+                <Image style={styles.bedRooms} source={Images.parkingIcon} />
+                <Text style={styles.roomsText}>{item.rooms.bathrooms}</Text>
+              </View>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
         <View style={styles.detailsView}>
           <Text style={styles.descriptionText}>{item.description}</Text>
           <Text style={styles.priceText}>
@@ -78,6 +97,36 @@ const styles = ScaledSheet.create({
     fontSize: "14@s",
     color: "rgba(255, 255, 255, 1)",
     paddingVertical: "2@vs",
+  },
+  roomsView: {
+    marginLeft: "70%",
+    marginTop: "120@vs",
+    marginRight: "10@vs",
+    height: "20@vs",
+    flexDirection: "row",
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    borderRadius: "4@s",
+    alignItems: "center",
+  },
+  imagesView: {
+    height: "100%",
+    borderBottomLeftRadius: "2@vs",
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  bedRooms: {
+    height: "70%",
+    flex: 1,
+    resizeMode: "contain",
+    marginHorizontal: "4@s",
+  },
+  roomsText: {
+    height: "100%",
+    flex: 1,
+    fontSize: "12@s",
+    marginTop: "6@vs",
+    color: "black",
   },
   detailsView: {
     height: "20@vs",

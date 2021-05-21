@@ -13,48 +13,7 @@ import Strings from "../screens/Theme/Strings";
 import Images from "../screens/Theme/Images";
 import Cards from "./Cards";
 
-const mockData = [
-  {
-    miles: 2.3,
-    description: "Sunny apartment",
-    price: 233,
-    location: "Los Angeles",
-    imageSource: Images.house1,
-    key: 1,
-  },
-  {
-    miles: 2.3,
-    description: "Sunny apartment",
-    price: 233,
-    location: "Los Angeles",
-    imageSource: Images.house1,
-    key: 2,
-  },
-  {
-    miles: 2.3,
-    description: "Sunny apartment",
-    price: 233,
-    location: "Los Angeles",
-    imageSource: Images.house1,
-    key: 3,
-  },
-  {
-    miles: 2.3,
-    description: "Sunny apartment",
-    price: 233,
-    location: "Los Angeles",
-    imageSource: Images.house1,
-    key: 4,
-  },
-  {
-    miles: 2.3,
-    description: "Sunny apartment",
-    price: 233,
-    location: "Los Angeles",
-    imageSource: Images.house1,
-    key: 5,
-  },
-];
+
 const otherData = [
   {
     miles: 2.3,
@@ -75,7 +34,7 @@ const otherData = [
     key: 2,
   },
 ];
-const CardsComponent = () => {
+const CardsComponent = ({data,navigation}) => {
   
   const renderOffers = (item) => {
     return (
@@ -102,22 +61,21 @@ const CardsComponent = () => {
       </View>
     );
   };
-
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <FlatList
         style={styles.cardList}
         contentContainerStyle={styles.cardListContainer}
         showsVerticalScrollIndicator={false}
         numColumns={1}
-        keyExtractor={(mockData) => mockData.key}
-        data={mockData}
+        keyExtractor={(data) => data.id}
+        data={data}
         renderItem={({ item }) => {
-          return Cards(item);
+          return Cards(item,navigation);
         }}
       ></FlatList>
       <Text style={styles.otherOffersText}>{Strings.cardsComponent.labels.otherOffers}</Text>
-      <ScrollView
+       <ScrollView
         scrollEnabled={true}
         horizontal={true}
         showsHorizontalScrollIndicator={false}

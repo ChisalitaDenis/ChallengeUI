@@ -15,31 +15,7 @@ import Images from "../Theme/Images";
 
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 60;
-const mockData = [
-  {
-    images: [
-      { imageSource:  Images.house2v1},
-      { imageSource:  Images.house2v2},
-      { imageSource:  Images.house2v3},
-    ],
-    summaryDescription: "Luxury apartments",
-    stars: 4,
-    profilePicture: Images.rentProfilePic,
-    specifications: [
-      { specification: "3 Bathrooms" },
-      { specification: "Wi Fi" },
-      { specification: "3 Bathrooms" },
-      { specification: "3 Bathrooms" },
-    ],
-    description:
-      "Nullam hendrerit lectus non pretium fermentum. Donec faucibus sodales ante, nec finibus quam lacinia sit amet. Nunc ut posuere erat. Proin convallis odio elementum sem vestibulum",
-    about: [
-      { imageSource: Images.house1},
-      { imageSource: Images.house1 },
-    ],
-    price: 150,
-  },
-];
+
 const ApartmentScreen = () => {
   const [currentDot, setCurrentDot] = useState(0);
 

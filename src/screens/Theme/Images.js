@@ -22,4 +22,7 @@ export default {
   languageIcon:require("../../../assets/languageIcon.png"),
   messageIcon:require("../../../assets/messageIcon.png"),
   callIcon:require("../../../assets/callIcon.png"),
+  bedRoomsIcon:require("../../../assets/bedRoomsIcon.png"),
+  bathRoomIcon:require("../../../assets/bathRoomIcon.png"),
+  parkingIcon:require("../../../assets/parking.png"),
 };

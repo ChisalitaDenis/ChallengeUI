@@ -13,7 +13,7 @@ const navigator = createStackNavigator(
     HolderProfile: HolderProfile
   },
   {
-    initialRouteName: "MyProfile",
+    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerShown:false
     },
