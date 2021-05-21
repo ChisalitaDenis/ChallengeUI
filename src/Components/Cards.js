@@ -10,11 +10,13 @@ import { ScaledSheet } from "react-native-size-matters";
 import Strings from "../screens/Theme/Strings";
 import Images from "../screens/Theme/Images";
 
-const Cards = (item, navigation) => {
+const Cards = (item,navigateToApartment) => {
   const renderCards = (item) => {
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>{navigateToApartment(item.id)}}
+        >
           <ImageBackground
             style={styles.cardPhoto}
             source={{ uri: item.thumbnail }}

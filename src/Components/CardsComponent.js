@@ -12,6 +12,7 @@ import { ScaledSheet } from "react-native-size-matters";
 import Strings from "../screens/Theme/Strings";
 import Images from "../screens/Theme/Images";
 import Cards from "./Cards";
+import { useNavigation } from "@react-navigation/native";
 
 
 const otherData = [
@@ -34,8 +35,11 @@ const otherData = [
     key: 2,
   },
 ];
-const CardsComponent = ({data,navigation}) => {
-  
+const CardsComponent = ({data}) => {
+  const navigation=useNavigation();
+  const navigateToApartment=(id)=>{
+    navigation.navigate('Apartment',{id});
+  };
   const renderOffers = (item) => {
     return (
       <View >
@@ -71,7 +75,7 @@ const CardsComponent = ({data,navigation}) => {
         keyExtractor={(data) => data.id}
         data={data}
         renderItem={({ item }) => {
-          return Cards(item,navigation);
+          return Cards(item,navigateToApartment);
         }}
       ></FlatList>
       <Text style={styles.otherOffersText}>{Strings.cardsComponent.labels.otherOffers}</Text>

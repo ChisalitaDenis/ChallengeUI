@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Text,
   View,
@@ -12,14 +12,26 @@ import {
 import { ScaledSheet } from "react-native-size-matters";
 import Strings from "../Theme/Strings";
 import Images from "../Theme/Images";
+import { getRentById } from "../../Api/Yelp";
 
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 60;
 
-const ApartmentScreen = () => {
+const ApartmentScreen = ({ navigation, route }) => {
   const [currentDot, setCurrentDot] = useState(0);
+  const apartmentID = route.params.id;
+  const [apartment, setApartment] = useState(null);
+  const fetchApartment = useCallback(async (apartmentID) => {
+    const data = await getRentById(apartmentID);
+    console.log("ceplm4",data);
+    setApartment(data);
+  }, [route.params.id]);
 
-  change = ({ nativeEvent }) => {
+  useEffect(() => {
+    fetchApartment(route.params.id);
+  }, [route.params.id])
+  console.log("merge",apartmentID);
+  const change = ({ nativeEvent }) => {
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
     );
@@ -28,36 +40,20 @@ const ApartmentScreen = () => {
     }
   };
   const renderSpecs = (item) => {
-    return(
-      item.map((item, index) => {
-        return(
-            <TouchableOpacity style={styles.specsButtonsStyle}>
-              <Text style={styles.specsTextStyle}>{item.specification}</Text>
-            </TouchableOpacity>
-        );
-      })
+    return (
+      <TouchableOpacity style={styles.specsButtonsStyle}>
+        <Text style={styles.specsTextStyle}>{item}</Text>
+      </TouchableOpacity>
     );
   };
   const renderImages = (item) => {
-    return(
-     item.map(item=> {
-        return <Image style={styles.imageStyle} source={item.imageSource} />;
-      })
-    );
+    return <Image style={styles.imageStyle} source={{ uri: item }} />;
   };
   const renderStars = (item) => {
-    return(
-      new Array(item.stars).fill(0).map(() => {
-        return (
-          <Image
-            style={styles.starsIcons}
-            source={Images.starIcon}
-          ></Image>
-        );
-      })
-    );
+      return <Image style={styles.starsIcons} source={Images.starIcon}></Image>;
   };
-  const renderData = (item) => {
+  const renderData =useCallback((item) => {
+    console.log("item",item);
     return (
       <View style={{ flex: 1, backgroundColor: "red" }}>
         <ScrollView
@@ -76,7 +72,7 @@ const ApartmentScreen = () => {
               numRows={1}
               style={styles.imageScrollView}
             >
-              {renderImages(item.images)}
+              {item.images.map((item) => renderImages(item))}
             </ScrollView>
             <View style={styles.dotsStyle}>
               {new Array(item.images.length).fill(0).map((i, k) => {
@@ -99,9 +95,14 @@ const ApartmentScreen = () => {
             <View style={styles.summaryViewInfo}>
               <Text style={styles.summaryText}>{item.summaryDescription}</Text>
 
-              <View style={{ flexDirection: "row" }}>{renderStars(item)}</View>
+              <View style={{ flexDirection: "row" }}>
+                { new Array(item.stars).fill(0).map(() => {return renderStars()})}
+              </View>
             </View>
-            <Image style={styles.profilePic} source={item.profilePicture} />
+            <Image
+              style={styles.profilePic}
+              source={{ uri: item.host.profilePicture}}
+            />
           </View>
           <Text style={styles.descriptionTitle}>
             {Strings.apartmentScreen.labels.specification}
@@ -112,29 +113,41 @@ const ApartmentScreen = () => {
             showsHorizontalScrollIndicator={false}
             numRows={1}
             style={styles.specsBar}
-          >{renderSpecs(item.specifications)}</ScrollView>
-          <Text style={styles.descriptionTitle}>{Strings.apartmentScreen.labels.description}</Text>
+          >
+            {item.specifications.map((item) => renderSpecs(item))}
+          </ScrollView>
+          <Text style={styles.descriptionTitle}>
+            {Strings.apartmentScreen.labels.description}
+          </Text>
           <Text style={styles.descriptionTextStyle}>{item.description}</Text>
-          <Text style={styles.aboutTextStyle}>{Strings.apartmentScreen.labels.about}</Text>
+          <Text style={styles.aboutTextStyle}>
+            {Strings.apartmentScreen.labels.about}
+          </Text>
         </ScrollView>
         <View style={styles.bottomMenu}>
           <View style={styles.priceView}>
-            <Text style={styles.priceTextSyle}>{item.price}{Strings.cardsComponent.labels.currency}</Text>
-            <Text style={styles.perNightTextStyle}>{Strings.apartmentScreen.labels.perNight}</Text>
+            <Text style={styles.priceTextSyle}>
+              {item.price}
+              {Strings.cardsComponent.labels.currency}
+            </Text>
+            <Text style={styles.perNightTextStyle}>
+              {Strings.apartmentScreen.labels.perNight}
+            </Text>
           </View>
           <TouchableOpacity style={styles.bookingButton}>
-            <Text style={styles.bookingButtonTextStyle}>{Strings.apartmentScreen.buttons.booking}</Text>
+            <Text style={styles.bookingButtonTextStyle}>
+              {Strings.apartmentScreen.buttons.booking}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
     );
-  };
+  },[route.params.id]);
   return (
     <SafeAreaView style={styles.mainView}>
-      {mockData.map((item, index) => {
-        return renderData(item);
-      })}
-    </SafeAreaView>
+      
+      {apartment && renderData(apartment)}
+      </SafeAreaView>
   );
 };
 

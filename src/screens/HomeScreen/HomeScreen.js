@@ -7,7 +7,7 @@ import CardsComponent from "../../Components/CardsComponent";
 import BottomComponent from "../../Components/BottomComponent";
 import { getAllRents } from "../../Api/Yelp";
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const [rents,setRents]=useState([]);
   const fetchRents = useCallback(async () => {
     const data = await getAllRents();
@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
         <ChipsComponents />
       </View>
       <View style={styles.mainCards}>
-        <CardsComponent data={rents} navigation />
+        <CardsComponent data={rents} />
       </View>
       <View>
         <BottomComponent />

@@ -13,6 +13,5 @@ export const getAllRents= async()=>{
 
 export const getRentById=async(id)=>{
     const response=await axios.get(baseURL+`/rents/${id}`);
-    console.log(response.data);
     return response.data;
 }
